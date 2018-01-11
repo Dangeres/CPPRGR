@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "iostream"
 #include <string>
-#include "typeinfo"
-#include "map"
+#include <map>
 
 using namespace std;
 
@@ -11,10 +10,9 @@ using namespace std;
 template <class Items, class Item >
 int get_count(Items elements[], Item an_element, int size) {
 	int count = 0;
-	//проверяем типы переменных в массиве и искомую, если все ок - идем смотреть сколько их
-	if (typeid(*elements).name() == typeid(an_element).name())
 	for (int i = 0; i < size; i++) {
-		count++;
+		if(elements[i]==an_element)
+			count++;
 	}
 	return count;
 }
@@ -23,22 +21,18 @@ int get_count(Items elements[], Item an_element, int size) {
 //Длина масива - int
 //Я не знаю как создать словарь без типа, поэтому сделал костыль
 template <class Items, class Item>
-void sorts(Items elements[],Item temp, int size) {
-
+map<Item, int> sorts(Items elements[], Item temp, int size) {
 	//словарь для хранения результатов
 	map<Item, int> myresult;
 
-	//перебираем все значения и увеличиваем на 1 кажды элемент для словаря
+	//перебираем все значения и увеличиваем на 1 каждый элемент для словаря
+	//если входной массив имеет такой вид: "one","two","two"
+	//то после выполнения этого цикла будет возвращен результат: "one":1, "two":2
 	for (int i = 0; i < size; i++) {
 		myresult[ elements[i] ]++;
 	}
 
-	//выводим идя по словарю
-	//словарь имеет 2 параметра: первый(ключ) и второй(значение)
-	//когда выводим - обращаемся именно к ним
-	for (auto it = myresult.begin(); it != myresult.end(); it++){
-		cout << it->first << " : " << it->second << endl;
-	}
+	return myresult;
 }
 
 int main(){
@@ -54,12 +48,17 @@ int main(){
 	double searchd = 1.111;
 	cout << get_count(doubles, searchd, 6) << " of " << searchd << endl;
 
+	map<string, int> myresult = sorts(strings, strings[0], 6);
 
-	cout << get_count(doubles, "1", 6) << " of " << searchd << endl;
+	cout << "result of second function" << endl;
 
-	sorts(strings,strings[0],6);
+	//выводим идя по словарю
+	//словарь имеет 2 параметра: первый(ключ) и второй(значение)
+	//когда выводим - обращаемся именно к ним
+	for (auto it = myresult.begin(); it != myresult.end(); it++) {
+		cout << it->first << " : " << it->second << endl;
+	}
 
 	system("pause");
     return 0;
 }
-
