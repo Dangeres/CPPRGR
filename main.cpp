@@ -35,22 +35,36 @@ map<Item, int> sorts(Items elements[], Item temp, int size) {
 	return myresult;
 }
 
+template <class Items>
+void printArray(Items elements[],int size) {
+	for (int a = 0; a < size; a++) {
+		cout << elements[a];
+		if (a != size - 1) cout << " ; ";
+	}
+	cout << endl;
+}
+
 int main(){
 	int numbers[11] = { 1,2,3,4,5,6,7,1,1,1,2 };
 	int searchi = 1;
+	printArray(numbers, 11);
 	cout << get_count(numbers, 1, 11) << " of " << searchi << endl;
 
 	string strings[6] = { "one", "two", "three", "four", "one", "two" };
 	string searchs = "one";
+	printArray(strings, 6);
 	cout << get_count(strings, searchs, 6) << " of " << searchs << endl;
 
 	double doubles[6] = { 1.111, 2.222, 3.333, 4.444, 5.555, 6.666 };
 	double searchd = 1.111;
+	printArray(doubles, 6);
 	cout << get_count(doubles, searchd, 6) << " of " << searchd << endl;
 
 	map<string, int> myresult = sorts(strings, strings[0], 6);
 
 	cout << "result of second function" << endl;
+
+	printArray(strings, 6);
 
 	//выводим идя по словарю
 	//словарь имеет 2 параметра: первый(ключ) и второй(значение)
